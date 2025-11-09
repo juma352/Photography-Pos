@@ -1,30 +1,28 @@
 #!/bin/bash
-# Build script for production deployment
+# Build script for Railway deployment
 
-echo "🔧 Building Mawingu Photography Portfolio..."
+echo "🔧 Building Mawingu Photography Portfolio for Railway..."
 
-# Install PHP dependencies
+# Check PHP version
+php -v
+
+# Install PHP dependencies without platform requirements check
 echo "📦 Installing PHP dependencies..."
-composer install --no-dev --optimize-autoloader
+composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
 # Install Node dependencies  
 echo "📦 Installing Node dependencies..."
-npm ci
+npm ci --only=production
 
 # Build assets
 echo "🎨 Building frontend assets..."
 npm run build
 
-# Clear and cache Laravel configurations
-echo "⚙️ Optimizing Laravel..."
+# Clear Laravel caches (but don't cache yet - Railway will do this)
+echo "⚙️ Clearing Laravel caches..."
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 php artisan cache:clear
 
-# Generate optimized files
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-echo "✅ Build complete! Ready for deployment."
+echo "✅ Build complete! Ready for Railway deployment."
