@@ -10,13 +10,17 @@ php -v
 echo "📦 Installing PHP dependencies..."
 composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-# Install Node dependencies  
+# Install Node dependencies (including dev for build tools)
 echo "📦 Installing Node dependencies..."
-npm ci --only=production
+npm ci
 
 # Build assets
 echo "🎨 Building frontend assets..."
 npm run build
+
+# Clean up node_modules after build (optional for smaller deployment)
+echo "🧹 Cleaning up dev dependencies..."
+npm prune --production
 
 # Clear Laravel caches (but don't cache yet - Railway will do this)
 echo "⚙️ Clearing Laravel caches..."
