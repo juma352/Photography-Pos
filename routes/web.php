@@ -7,6 +7,36 @@ use App\Http\Controllers\Admin\CollectionController;
 use App\Http\Controllers\Admin\PhotoController;
 use Illuminate\Support\Facades\Route;
 
+// Health Check Route (for debugging)
+Route::get('/health', function () {
+    return response()->json([
+        'status' => 'OK',
+        'app' => config('app.name'),
+        'env' => config('app.env'),
+        'debug' => config('app.debug'),
+        'key_set' => config('app.key') ? 'YES' : 'NO',
+        'db_connection' => config('database.default'),
+        'timestamp' => now()
+    ]);
+});
+
+// Debug Route (temporary)
+Route::get('/debug', function () {
+    return response()->json([
+        'php_version' => PHP_VERSION,
+        'laravel_version' => app()->version(),
+        'environment' => app()->environment(),
+        'config_cached' => app()->configurationIsCached(),
+        'routes_cached' => app()->routesAreCached(),
+        'env_vars' => [
+            'APP_KEY' => env('APP_KEY') ? 'SET' : 'NOT SET',
+            'APP_ENV' => env('APP_ENV'),
+            'APP_DEBUG' => env('APP_DEBUG'),
+            'DB_CONNECTION' => env('DB_CONNECTION'),
+        ]
+    ]);
+});
+
 // Public Portfolio Routes
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
