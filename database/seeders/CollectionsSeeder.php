@@ -14,9 +14,9 @@ class CollectionsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Clear existing data safely
-        Photo::query()->delete();
-        Collection::query()->delete();
+        // Clear existing data safely (PostgreSQL compatible)
+        \DB::statement('TRUNCATE TABLE photos RESTART IDENTITY CASCADE;');
+        \DB::statement('TRUNCATE TABLE collections RESTART IDENTITY CASCADE;');
 
         // Create Chromatic Rebellion Collection
         $chromaticRebellion = Collection::create([
