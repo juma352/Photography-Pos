@@ -8,7 +8,7 @@
     <!-- Google Fonts for Artistic Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Dancing+Script:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Dancing+Script:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&family=Allura&family=Alex+Brush&family=Herr+Von+Muellerhoff&family=Pinyon+Script&family=Tangerine:wght@400;700&family=Freestyle+Script&family=Clicker+Script&family=Engagement&family=Rouge+Script&display=swap" rel="stylesheet">
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -85,8 +85,8 @@
         /* Dark backdrop for logo */
         .logo-container {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);
-            border-radius: 12px;
-            padding: 8px 12px;
+            border-radius: 8px;
+            padding: 4px 8px;
             backdrop-filter: blur(2px);
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
@@ -220,10 +220,10 @@
 
     {{-- Navbar --}}
     <nav class="bg-white/95 backdrop-blur-sm shadow-xl border-b border-gray-100 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="max-w-6xl mx-auto px-6 py-2 flex justify-between items-center">
             <a href="{{ route('home') }}" class="flex items-center group transition-all duration-300 hover:scale-105 logo-container">
-                <img src="{{ asset('Images/88f4e623-f6d7-4fa6-8bc8-ee0e3d9d004e.png') }}" alt="Mawingu Photography Logo" 
-                     class="h-28 w-auto logo-enhanced">
+                <img src="{{ asset('Images/Grace Matu photography samples/clear Mawingu.png') }}" alt="Mawingu Photography Logo" 
+                     class="h-20 w-auto logo-enhanced">
             </a>
             <div class="flex space-x-10">
                 <a href="{{ route('gallery') }}" class="relative font-artistic-sub text-gray-700 font-semibold text-lg hover:text-blue-600 transition-all duration-300 letter-spacing-wide after:content-[''] after:absolute after:w-0 after:h-1 after:bottom-0 after:left-0 after:bg-gradient-to-r after:from-blue-600 after:to-purple-600 after:transition-all after:duration-300 hover:after:w-full after:rounded-full transform hover:-translate-y-1">Gallery</a>

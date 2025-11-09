@@ -4,18 +4,18 @@
 <!-- Hero Section -->
 <div class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white py-20">
     <div class="max-w-6xl mx-auto px-6 text-center">
-        <h1 class="font-artistic-heading text-5xl font-bold mb-4 text-gradient">Photography Collections</h1>
-        <p class="font-artistic-body text-xl text-gray-300 max-w-2xl mx-auto">Explore curated collections showcasing different styles and moments captured through my lens</p>
+        <h1 class="font-artistic-heading text-5xl font-bold mb-4 text-gradient">Mawingu Collections</h1>
+        <p class="font-artistic-body text-xl text-gray-300 max-w-2xl mx-auto">Discover our curated photography collections that capture the essence of rebellion, movement, and artistic expression</p>
     </div>
 </div>
 
 <!-- Collections Grid -->
 <div class="max-w-7xl mx-auto py-16 px-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         @foreach($collections as $collection)
-            <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                <a href="{{ route('gallery.collection', $collection['id']) }}" class="block">
-                    <!-- Collection Cover Image -->
+            <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white">
+                <a href="{{ route('gallery.collection', $collection['id']) }}" class="block h-full">
+                    <!-- Collection Cover Image with Fixed Height -->
                     <div class="relative h-80 overflow-hidden">
                         <img src="{{ asset('Images/' . $collection['cover_image']) }}" 
                              alt="{{ $collection['title'] }}"
@@ -26,17 +26,22 @@
                         
                         <!-- Content Overlay -->
                         <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                            <h3 class="font-artistic-heading text-2xl font-bold mb-2">{{ $collection['title'] }}</h3>
-                            <p class="font-artistic-body text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                                {{ $collection['description'] }}
+                            <h3 class="font-artistic-heading text-2xl font-bold mb-2 line-clamp-1">{{ $collection['title'] }}</h3>
+                            <p class="font-artistic-body text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 line-clamp-3 text-sm leading-relaxed">
+                                {{ Str::limit($collection['description'], 120) }}
                             </p>
                             
-                            <!-- Photo Count -->
-                            <div class="flex items-center mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
-                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span class="text-sm">{{ count($collection['photos']) }} photos</span>
+                            <!-- Photo Count & Collection Info -->
+                            <div class="flex items-center justify-between mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+                                <div class="flex items-center">
+                                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span class="text-sm font-medium">{{ count($collection['photos']) }} photos</span>
+                                </div>
+                                <div class="text-xs bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full">
+                                    Mawingu Collection
+                                </div>
                             </div>
                         </div>
                         

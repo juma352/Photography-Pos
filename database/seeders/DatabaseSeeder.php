@@ -18,8 +18,13 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Grace Matu',
+            'email' => 'admin@gracephotography.com',
+        ]);
+
+        // Seed the photography collections
+        $this->call([
+            CollectionsSeeder::class,
         ]);
     }
 }

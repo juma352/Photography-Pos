@@ -28,6 +28,102 @@ html {
     }
 }
 
+/* Ornate Mawingu Logo Styles - Matching Grace-logo.jpg */
+.mawingu-logo {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    transition: all 0.4s ease;
+    position: relative;
+    font-style: italic;
+    letter-spacing: 2px;
+}
+
+.mawingu-logo:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 6px 12px rgba(102, 126, 234, 0.4));
+}
+
+/* Decorative flourishes */
+.mawingu-logo::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -15px;
+    right: -15px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #667eea, transparent);
+    border-radius: 2px;
+}
+
+.mawingu-logo::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: -10px;
+    right: -10px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #764ba2, transparent);
+    border-radius: 1px;
+}
+
+/* Alternative solid color version for admin panel */
+.mawingu-logo-admin {
+    color: #ffffff;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    transition: all 0.4s ease;
+    position: relative;
+    font-style: italic;
+    letter-spacing: 1.5px;
+}
+
+.mawingu-logo-admin:hover {
+    transform: scale(1.08);
+    color: #e0e7ff;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+/* Admin panel decorative elements */
+.mawingu-logo-admin::before {
+    content: '✦';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.6em;
+    color: #9ca3af;
+    animation: twinkle 2s ease-in-out infinite;
+}
+
+.mawingu-logo-admin::after {
+    content: '✦';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.6em;
+    color: #9ca3af;
+    animation: twinkle 2s ease-in-out infinite reverse;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.4; transform: translateY(-50%) scale(0.8); }
+    50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+}
+
+/* Ornate Font variations - inspired by Grace-logo.jpg */
+.font-mawingu-ornate { font-family: 'Great Vibes', cursive; }
+.font-mawingu-elegant { font-family: 'Allura', cursive; }
+.font-mawingu-vintage { font-family: 'Alex Brush', cursive; }
+.font-mawingu-royal { font-family: 'Herr Von Muellerhoff', cursive; }
+.font-mawingu-classic { font-family: 'Pinyon Script', cursive; }
+.font-mawingu-decorative { font-family: 'Tangerine', cursive; font-weight: 700; }
+.font-mawingu-script { font-family: 'Clicker Script', cursive; }
+.font-mawingu-stylish { font-family: 'Engagement', cursive; }
+.font-mawingu-fancy { font-family: 'Rouge Script', cursive; }
+
 /* Image loading animation */
 @keyframes shimmer {
     0% {

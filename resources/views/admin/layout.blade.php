@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Dashboard') - {{ config('app.name') }}</title>
+    
+    <!-- Google Fonts for Ornate Mawingu Logo -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Allura&family=Alex+Brush&family=Herr+Von+Muellerhoff&family=Pinyon+Script&family=Tangerine:wght@400;700&family=Freestyle+Script&family=Clicker+Script&family=Engagement&family=Rouge+Script&display=swap" rel="stylesheet">
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -15,7 +19,7 @@
             <!-- Logo/Header -->
             <div class="p-6 border-b border-gray-700">
                 <div class="flex items-center">
-                    <img src="{{ asset('Images/Grace-logo.jpg') }}" alt="Grace Photography" class="h-10 w-10 rounded-lg">
+                    <img src="{{ asset('Images/Grace Matu photography samples/clear Mawingu.png') }}" alt="Grace Photography" class="h-10 w-10 rounded-lg">
                     <div class="ml-3">
                         <h2 class="text-lg font-semibold">Grace Photography</h2>
                         <p class="text-sm text-gray-400">Admin Panel</p>

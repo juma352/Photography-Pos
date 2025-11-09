@@ -37,23 +37,23 @@
 
 <!-- Photos Grid -->
 <div class="max-w-7xl mx-auto py-16 px-6">
-    <!-- Masonry Grid Layout -->
-    <div class="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+    <!-- Uniform Grid Layout -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($collection['photos'] as $index => $photo)
-            <div class="break-inside-avoid group cursor-pointer" 
+            <div class="group cursor-pointer" 
                  x-data="{ showInfo: false }"
                  x-on:click="$dispatch('open-lightbox', { src: '{{ asset('Images/' . $photo['src']) }}', title: '{{ $photo['title'] }}', description: '{{ $photo['description'] }}', index: {{ $index }} })">
                 
-                <div class="relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
-                    <!-- Image -->
-                    <div class="relative overflow-hidden">
+                <div class="bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden h-full flex flex-col">
+                    <!-- Image Container with Fixed Height -->
+                    <div class="relative overflow-hidden h-64">
                         <img src="{{ asset('Images/' . $photo['src']) }}" 
                              alt="{{ $photo['title'] }}"
-                             class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                              loading="lazy">
                         
                         <!-- Hover Overlay -->
-                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white">
                                 <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -61,23 +61,34 @@
                                 </svg>
                             </div>
                         </div>
+                        
+                        <!-- Photo Badge -->
+                        <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                                <span class="text-xs font-medium text-gray-800">{{ $index + 1 }}</span>
+                            </div>
+                        </div>
                     </div>
                     
-                    <!-- Photo Info -->
-                    <div class="p-4">
-                        <h3 class="font-semibold text-gray-900 mb-1">{{ $photo['title'] }}</h3>
-                        <p class="text-sm text-gray-600 line-clamp-2">{{ $photo['description'] }}</p>
+                    <!-- Photo Info Container -->
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-semibold text-gray-900 mb-2 line-clamp-1">{{ $photo['title'] }}</h3>
+                            <p class="text-sm text-gray-600 line-clamp-3 mb-3">{{ $photo['description'] }}</p>
+                        </div>
                         
                         <!-- Action Buttons -->
-                        <div class="flex items-center justify-between mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <button class="text-xs text-blue-600 hover:text-blue-800 font-medium">View Details</button>
+                        <div class="flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <button class="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200">
+                                View Full Size
+                            </button>
                             <div class="flex space-x-2">
-                                <button class="p-1 text-gray-400 hover:text-red-500 transition-colors duration-200">
+                                <button class="p-1.5 text-gray-400 hover:text-red-500 transition-colors duration-200 rounded-full hover:bg-red-50">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
                                     </svg>
                                 </button>
-                                <button class="p-1 text-gray-400 hover:text-blue-500 transition-colors duration-200">
+                                <button class="p-1.5 text-gray-400 hover:text-blue-500 transition-colors duration-200 rounded-full hover:bg-blue-50">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
                                     </svg>
@@ -88,6 +99,24 @@
                 </div>
             </div>
         @endforeach
+    </div>
+
+    <!-- Collection Stats -->
+    <div class="mt-16 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div class="group">
+                <div class="text-3xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">{{ count($collection['photos']) }}</div>
+                <div class="text-gray-600 font-medium">Photos in Collection</div>
+            </div>
+            <div class="group">
+                <div class="text-3xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors duration-300">{{ $collection['title'] }}</div>
+                <div class="text-gray-600 font-medium">Collection Name</div>
+            </div>
+            <div class="group">
+                <div class="text-3xl font-bold text-gray-900 mb-2 group-hover:text-pink-600 transition-colors duration-300">Mawingu</div>
+                <div class="text-gray-600 font-medium">Photography Studio</div>
+            </div>
+        </div>
     </div>
 </div>
 
