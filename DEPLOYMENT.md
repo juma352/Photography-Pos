@@ -48,24 +48,113 @@ DB_PASSWORD=YOUR_DB_PASS
 
 ---
 
-## Option 2: Render
+## Option 2: Render (Docker Deployment)
 
-### Step 1: Sign Up
+### Method A: Using render.yaml (Recommended)
+
+Your repository already has a `render.yaml` file configured. This makes deployment automatic!
+
+#### Step 1: Sign Up & Connect
 1. Go to [render.com](https://render.com)
-2. Connect your GitHub account
+2. Sign up and connect your GitHub account
+3. Click "New +" → "Blueprint"
+4. Select your Photography-Portfolio repository
+5. Render will automatically detect `render.yaml` and set everything up
 
-### Step 2: Create Web Service
-1. Click "New +"
-2. Select "Web Service"
-3. Connect your GitHub repo
-4. Configure:
-   - **Build Command**: `composer install && npm install && npm run build`
-   - **Start Command**: `php artisan serve --host=0.0.0.0 --port=$PORT`
+#### Step 2: Environment Variables
+Render will prompt you to set these (or add them in Dashboard):
+```
+APP_KEY=base64:YOUR_KEY_HERE  # Generate with: php artisan key:generate --show
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-app.onrender.com
+DB_CONNECTION=mysql
+```
 
-### Step 3: Database
-1. Create "PostgreSQL" service
-2. Copy connection details
-3. Add to environment variables
+#### Step 3: Database Connection
+The database will be automatically created and connected via the render.yaml config.
+
+#### Step 4: Deploy!
+- Click "Apply" and Render will:
+  - Build your Docker image
+  - Create MySQL database
+  - Deploy your app
+  - Run migrations automatically
+
+---
+
+### Method B: Manual Docker Deployment
+
+#### Step 1: Create MySQL Database
+1. In Render Dashboard, click "New +"
+2. Select "MySQL"
+3. Choose instance type (Starter is $7/month)
+4. Click "Create Database"
+5. Copy the **Internal Database URL** (looks like: `mysql://user:pass@host:port/dbname`)
+
+#### Step 2: Create Web Service
+1. Click "New +" → "Web Service"
+2. Connect your GitHub repository
+3. Configure:
+   - **Name**: `photography-portfolio`
+   - **Region**: Choose closest to Germany (Frankfurt if available)
+   - **Branch**: `main`
+   - **Runtime**: **Docker**
+   - **Instance Type**: Starter ($7/month) or Free
+
+#### Step 3: Environment Variables
+Add these in the "Environment" section:
+```
+APP_NAME=Mawingu Photography
+APP_ENV=production
+APP_DEBUG=false
+APP_KEY=base64:YOUR_APP_KEY_HERE
+APP_TIMEZONE=Europe/Berlin
+APP_URL=https://your-app-name.onrender.com
+
+DB_CONNECTION=mysql
+DB_HOST=<from_database_internal_url>
+DB_PORT=3306
+DB_DATABASE=<from_database_internal_url>
+DB_USERNAME=<from_database_internal_url>
+DB_PASSWORD=<from_database_internal_url>
+
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+CACHE_STORE=database
+QUEUE_CONNECTION=database
+LOG_CHANNEL=stack
+LOG_LEVEL=error
+```
+
+#### Step 4: Deploy Command (Optional)
+Add a deploy script in Render Dashboard under "Settings" → "Build & Deploy":
+```bash
+php artisan migrate --force && php artisan db:seed --force && php artisan config:cache && php artisan route:cache && php artisan view:cache
+```
+
+#### Step 5: Deploy!
+Click "Create Web Service" and Render will:
+1. Pull your code
+2. Build the Docker image
+3. Start the container
+4. Make your site live
+
+---
+
+### Render Docker Advantages:
+✅ Automatic HTTPS
+✅ Auto-deploy on git push
+✅ Container isolation
+✅ Better performance than buildpacks
+✅ European data centers available
+✅ DDoS protection included
+
+### Troubleshooting Render:
+- **503 Error**: Check logs for migration/seed issues
+- **Database Connection**: Verify DB credentials in environment variables
+- **Static Assets**: Ensure `npm run build` completed successfully in Docker build
+- **Permissions**: Storage directory permissions are handled in Dockerfile
 
 ---
 

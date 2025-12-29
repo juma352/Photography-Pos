@@ -1,0 +1,50 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Documentation
+README.md
+DEPLOYMENT.md
+
+# Node modules
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Environment files
+.env
+.env.*
+!env.production
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Laravel specific
+/storage/*.key
+/storage/logs/*
+!/storage/logs/.gitkeep
+/public/hot
+/public/storage
+
+# Testing
+.phpunit.result.cache
+phpunit.xml
+/tests
+
+# Build artifacts
+/build
+/dist

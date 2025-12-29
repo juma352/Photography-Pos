@@ -28,6 +28,10 @@ WORKDIR /var/www
 # Copy existing application directory contents
 COPY . /var/www
 
+# Copy deployment script
+COPY render-deploy.sh /usr/local/bin/render-deploy.sh
+RUN chmod +x /usr/local/bin/render-deploy.sh
+
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www
 
@@ -47,10 +51,34 @@ RUN a2enmod rewrite
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www \
-    && chmod -R 755 /var/www/storage
+    && chmod -R 755 /var/www/storage \
+    && chmod -R 755 /var/www/bootstrap/cache
 
-# Expose port 80
+# Create .env from production template if not exists
+RUN if [ ! -f /var/www/.env ]; then cp /var/www/env.production /var/www/.env; fi
+
+# Optimize Laravel for production
+RUN php artisan config:cache || true \
+    && php artisan route:cache || true \
+    && php artisan view:cache || true
+
+# Expose port 80 and 10000 (Render uses port 10000 by default)
 EXPOSE 80
+ENV PORT=80
+
+# Create entrypoint script for migrations
+RUN cat > /usr/local/bin/docker-entrypoint.sh << 'EOF'
+#!/bin/bash
+set -e
+
+# Run deployment tasks
+/usr/local/bin/render-deploy.sh
 
 # Start Apache
-CMD ["apache2-foreground"]
+exec apache2-foreground
+EOF
+
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Start using entrypoint
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

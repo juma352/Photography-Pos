@@ -1,15 +1,74 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📸 Mawingu Photography Portfolio
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, elegant photography portfolio built with Laravel 11, featuring dynamic galleries, collections, and an admin dashboard for managing photos.
 
-## About Laravel
+## ✨ Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 🖼️ Dynamic photo galleries with collections
+- 🎨 Responsive design with Tailwind CSS
+- 🔐 Admin dashboard for photo management
+- 📱 Mobile-optimized viewing experience
+- 🌍 Optimized for European hosting (Germany-based client)
+- 🐳 Docker-ready for easy deployment
+
+## 🚀 Quick Deploy to Render
+
+This project is configured for one-click deployment to Render using Docker:
+
+1. **Push to GitHub**
+2. **Go to [render.com](https://render.com)**
+3. **Click "New +" → "Blueprint"**
+4. **Select your repository**
+5. **Set your `APP_KEY`** (generate with `php artisan key:generate --show`)
+6. **Click "Apply"**
+
+✅ Done! Your site will be live in ~5-10 minutes.
+
+📖 **Detailed Instructions**: See [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)
+
+## 🛠️ Local Development
+
+### Prerequisites
+- PHP 8.2+
+- Composer
+- Node.js & npm
+- MySQL
+
+### Setup
+
+```bash
+# Clone repository
+git clone <your-repo-url>
+cd Photography-Portfolio
+
+# Install dependencies
+composer install
+npm install
+
+# Environment setup
+cp .env.example .env
+php artisan key:generate
+
+# Database setup
+php artisan migrate
+php artisan db:seed
+
+# Build assets
+npm run dev
+
+# Start server
+php artisan serve
+```
+
+Visit `http://localhost:8000`
+
+## 📦 Deployment Options
+
+- **Render (Docker)** - Recommended - [Guide](RENDER_DEPLOYMENT.md)
+- **Railway** - Fast & Easy - [Guide](DEPLOYMENT.md#option-1-railway)
+- **Heroku** - Traditional - [Guide](DEPLOYMENT.md#option-3-heroku)
+
+## 🏗️ Tech Stack
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
@@ -42,11 +101,88 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 - **[Redberry](https://redberry.international/laravel-development)**
 - **[Active Logic](https://activelogic.com)**
 
-## Contributing
+## 🏗️ Tech Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Backend**: Laravel 11
+- **Frontend**: Blade Templates + Tailwind CSS
+- **JavaScript**: Vite
+- **Database**: MySQL
+- **Deployment**: Docker (Render, Railway, Heroku compatible)
 
-## Code of Conduct
+## 📁 Project Structure
+
+```
+Photography-Portfolio/
+├── app/
+│   ├── Models/          # Photo, Collection, User models
+│   └── Http/
+│       └── Controllers/ # Gallery, Admin controllers
+├── resources/
+│   ├── views/           # Blade templates
+│   ├── css/             # Tailwind styles
+│   └── js/              # Frontend JavaScript
+├── public/
+│   └── Images/          # Photo storage
+├── database/
+│   ├── migrations/      # Database schema
+│   └── seeders/         # Sample data
+├── Dockerfile           # Docker configuration
+├── render.yaml          # Render Blueprint config
+└── DEPLOYMENT.md        # Deployment guides
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Key variables for production:
+
+```env
+APP_NAME="Mawingu Photography"
+APP_ENV=production
+APP_KEY=base64:...
+APP_URL=https://your-domain.com
+APP_TIMEZONE=Europe/Berlin
+
+DB_CONNECTION=mysql
+DB_HOST=your-db-host
+DB_DATABASE=your-db-name
+DB_USERNAME=your-db-user
+DB_PASSWORD=your-db-pass
+```
+
+See [env.production](env.production) for complete configuration template.
+
+## 📸 Admin Features
+
+- Upload and manage photos
+- Create and organize collections
+- Edit photo metadata
+- Gallery management
+- User authentication
+
+## 🌍 Performance
+
+Optimized for German/European audience:
+- CDN-ready static assets
+- Database query optimization
+- Image lazy loading
+- Cached routes and views
+
+## 📝 License
+
+This project is proprietary software developed for Mawingu Photography.
+
+## 🤝 Support
+
+For deployment issues or questions:
+- Check [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)
+- Review [DEPLOYMENT.md](DEPLOYMENT.md)
+- Contact the development team
+
+---
+
+Built with ❤️ using Laravel
 
 In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 

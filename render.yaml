@@ -1,0 +1,79 @@
+services:
+  # Web Service (Laravel App with Docker)
+  - type: web
+    name: photography-portfolio
+    runtime: docker
+    plan: starter  # Change to 'free' if you want the free tier
+    region: frankfurt  # Closest to Germany
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    
+    # Environment Variables
+    envVars:
+      - key: APP_NAME
+        value: Mawingu Photography
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_TIMEZONE
+        value: Europe/Berlin
+      - key: APP_KEY
+        generateValue: true  # You'll need to set this manually after deployment
+      - key: APP_URL
+        value: https://photography-portfolio.onrender.com  # Update with your actual URL
+      
+      # Database (will be auto-populated from database service)
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        fromDatabase:
+          name: photography-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: photography-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: photography-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: photography-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: photography-db
+          property: password
+      
+      # Cache & Session
+      - key: CACHE_STORE
+        value: database
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_LIFETIME
+        value: 120
+      - key: QUEUE_CONNECTION
+        value: database
+      
+      # Logging
+      - key: LOG_CHANNEL
+        value: stack
+      - key: LOG_LEVEL
+        value: error
+
+    # Health check
+    healthCheckPath: /
+
+    # Auto-deploy on push
+    autoDeploy: true
+
+  # MySQL Database
+  - type: database
+    name: photography-db
+    databaseName: photography_portfolio
+    plan: starter  # $7/month - Change to 'free' for PostgreSQL free tier
+    region: frankfurt
+    ipAllowList: []  # Empty means accessible from your web service
