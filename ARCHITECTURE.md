@@ -29,9 +29,9 @@
 │  4. Creates two services:                                       │
 │                                                                  │
 │  ┌──────────────────────────┐  ┌──────────────────────────────┐│
-│  │    MySQL Database        │  │     Web Service (Docker)     ││
+│  │ PostgreSQL Database      │  │     Web Service (Docker)     ││
 │  │                          │  │                              ││
-│  │  - Auto-provisioned      │◄─┤  - Builds Docker image      ││
+│  │  - Manually created      │◄─┤  - Builds Docker image      ││
 │  │  - Internal connection   │  │  - Runs migrations          ││
 │  │  - Persistent storage    │  │  - Starts Apache            ││
 │  │                          │  │  - Serves on port 80        ││
@@ -109,7 +109,7 @@ Photography-Portfolio/
 │
 ├─ render.yaml                   # Blueprint Infrastructure-as-Code
 │   ├─ Defines web service (Docker)
-│   ├─ Defines MySQL database
+│   ├─ (Database created manually: PostgreSQL)
 │   └─ Sets environment variables
 │
 ├─ render-deploy.sh             # Deployment automation script
@@ -193,14 +193,14 @@ MySQL Database
 ### Current Setup (Starter Plan)
 ```
 [Web Service] x1 instance
-[MySQL DB] x1 instance
+[PostgreSQL DB] x1 instance
 Cost: $14/month
 ```
 
 ### Scale Up (If needed)
 ```
 [Web Service] x2 instances (load balanced)
-[MySQL DB] x1 instance (upgraded)
+[PostgreSQL DB] x1 instance (upgraded)
 Cost: ~$28-50/month
 Performance: 2x faster, zero downtime
 ```
@@ -254,7 +254,7 @@ Access in Render Dashboard:
 ### Manual Backups
 ```bash
 # Database export (via Render Shell)
-php artisan db:backup
+pg_dump "$DATABASE_URL" > backup.sql
 
 # Or use Render's database backup feature
 # Dashboard → Database → Backups

@@ -106,7 +106,7 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 - **Backend**: Laravel 11
 - **Frontend**: Blade Templates + Tailwind CSS
 - **JavaScript**: Vite
-- **Database**: MySQL
+- **Database**: PostgreSQL on Render (MySQL also supported locally)
 - **Deployment**: Docker (Render, Railway, Heroku compatible)
 
 ## 📁 Project Structure
@@ -135,7 +135,7 @@ Photography-Portfolio/
 
 ### Environment Variables
 
-Key variables for production:
+Key variables for production (Render PostgreSQL):
 
 ```env
 APP_NAME="Mawingu Photography"
@@ -144,11 +144,12 @@ APP_KEY=base64:...
 APP_URL=https://your-domain.com
 APP_TIMEZONE=Europe/Berlin
 
-DB_CONNECTION=mysql
+DB_CONNECTION=pgsql
 DB_HOST=your-db-host
 DB_DATABASE=your-db-name
 DB_USERNAME=your-db-user
 DB_PASSWORD=your-db-pass
+DB_PORT=5432
 ```
 
 See [env.production](env.production) for complete configuration template.

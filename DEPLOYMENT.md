@@ -61,36 +61,43 @@ Your repository already has a `render.yaml` file configured. This makes deployme
 4. Select your Photography-Portfolio repository
 5. Render will automatically detect `render.yaml` and set everything up
 
-#### Step 2: Environment Variables
+#### Step 2: Create Database (PostgreSQL)
+Render Blueprints do **not** auto-create databases. Do this first:
+1. In Render Dashboard click "New +" → "PostgreSQL"
+2. Region: Frankfurt; Plan: Starter ($7) or Free
+3. Note the **internal connection** values (host, db, user, password, port 5432)
+
+#### Step 3: Environment Variables
 Render will prompt you to set these (or add them in Dashboard):
 ```
 APP_KEY=base64:YOUR_KEY_HERE  # Generate with: php artisan key:generate --show
 APP_ENV=production
 APP_DEBUG=false
 APP_URL=https://your-app.onrender.com
-DB_CONNECTION=mysql
+DB_CONNECTION=pgsql
+DB_HOST=<from_postgres_internal_url>
+DB_PORT=5432
+DB_DATABASE=<from_postgres_internal_url>
+DB_USERNAME=<from_postgres_internal_url>
+DB_PASSWORD=<from_postgres_internal_url>
 ```
-
-#### Step 3: Database Connection
-The database will be automatically created and connected via the render.yaml config.
 
 #### Step 4: Deploy!
 - Click "Apply" and Render will:
-  - Build your Docker image
-  - Create MySQL database
-  - Deploy your app
-  - Run migrations automatically
+   - Build your Docker image
+   - Deploy your app
+   - Run migrations automatically
 
 ---
 
 ### Method B: Manual Docker Deployment
 
-#### Step 1: Create MySQL Database
+#### Step 1: Create PostgreSQL Database
 1. In Render Dashboard, click "New +"
-2. Select "MySQL"
-3. Choose instance type (Starter is $7/month)
+2. Select "PostgreSQL"
+3. Choose instance type (Starter is $7/month or Free tier)
 4. Click "Create Database"
-5. Copy the **Internal Database URL** (looks like: `mysql://user:pass@host:port/dbname`)
+5. Copy the **Internal Database URL** (looks like: `postgres://user:pass@host:port/dbname`)
 
 #### Step 2: Create Web Service
 1. Click "New +" → "Web Service"
@@ -112,9 +119,9 @@ APP_KEY=base64:YOUR_APP_KEY_HERE
 APP_TIMEZONE=Europe/Berlin
 APP_URL=https://your-app-name.onrender.com
 
-DB_CONNECTION=mysql
+DB_CONNECTION=pgsql
 DB_HOST=<from_database_internal_url>
-DB_PORT=3306
+DB_PORT=5432
 DB_DATABASE=<from_database_internal_url>
 DB_USERNAME=<from_database_internal_url>
 DB_PASSWORD=<from_database_internal_url>

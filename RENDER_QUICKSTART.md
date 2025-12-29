@@ -31,14 +31,14 @@ git commit -m "Configure Render Docker deployment"
 git push origin main
 ```
 
-### Step 3: Create MySQL Database on Render
+### Step 3: Create PostgreSQL Database on Render
 1. Go to https://render.com Dashboard
-2. Click **"New +"** → **"MySQL"**
+2. Click **"New +"** → **"PostgreSQL"**
 3. Configure:
    - **Name**: `photography-db`
    - **Database**: `photography_portfolio`
    - **Region**: Frankfurt (closest to Germany)
-   - **Plan**: Starter ($7/month)
+   - **Plan**: Starter ($7/month) or Free (limited)
 4. Click **"Create Database"**
 5. Wait ~2 minutes for database to be ready
 6. Copy the **Internal Database URL** (save this!)
@@ -49,7 +49,7 @@ git push origin main
 3. Render will detect `render.yaml` automatically
 4. You'll be prompted to set environment variables:
    - **APP_KEY**: Paste your key from Step 1
-   - **DB_HOST**: From Internal URL (e.g., `mysql-xxx.frankfurt.render.com`)
+   - **DB_HOST**: From Internal URL (e.g., `dpg-xxx.frankfurt.render.com`)
    - **DB_DATABASE**: `photography_portfolio`
    - **DB_USERNAME**: From Internal URL
    - **DB_PASSWORD**: From Internal URL
@@ -65,13 +65,17 @@ Render will ask for these (most are auto-configured via render.yaml):
 
 **Required:**
 - `APP_KEY` - From Step 1 above ⬆️
+- `DB_HOST` - From PostgreSQL internal URL
+- `DB_DATABASE` - e.g., `photography_portfolio`
+- `DB_USERNAME` - From PostgreSQL internal URL
+- `DB_PASSWORD` - From PostgreSQL internal URL
 
 **Auto-configured from render.yaml:**
 - `APP_NAME` ✅
 - `APP_ENV` ✅
 - `APP_DEBUG` ✅
 - `APP_URL` ✅
-- `DB_*` (all database vars) ✅
+- `DB_PORT=5432` ✅
 
 ---
 
@@ -79,13 +83,13 @@ Render will ask for these (most are auto-configured via render.yaml):
 
 **Recommended Plan:**
 - Web Service (Docker): **$7/month**
-- MySQL Database: **$7/month**
+- PostgreSQL Database: **$7/month**
 - **Total: $14/month**
 
 **Free Alternative:**
 - Web Service: Free (sleeps after inactivity)
-- PostgreSQL: Free
-- **Total: $0/month** (requires code changes for PostgreSQL)
+- PostgreSQL: Free (shared resources)
+- **Total: $0/month**
 
 ---
 
@@ -117,8 +121,8 @@ Render will ask for these (most are auto-configured via render.yaml):
 
 ### Issue: "Database connection failed"
 **Solution:**
-1. Ensure database service is running (green status)
-2. Verify you're using **internal** database URL
+1. Ensure PostgreSQL service is running (green status)
+2. Verify you're using the **internal** database URL
 3. Check environment variables match database credentials
 
 ### Issue: "Static assets not loading"

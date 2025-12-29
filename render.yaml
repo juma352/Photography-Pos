@@ -10,8 +10,8 @@ services:
     dockerContext: .
     
     # Environment Variables
-    # Note: You'll need to create a MySQL database manually in Render Dashboard
-    # and add the DB_* environment variables after deployment
+    # Note: Render Blueprints do not auto-create databases. Create a PostgreSQL
+    # database manually in Render Dashboard and add the DB_* environment variables after deployment.
     envVars:
       - key: APP_NAME
         value: Mawingu Photography
@@ -26,19 +26,19 @@ services:
       - key: APP_URL
         value: https://photography-portfolio.onrender.com  # Update with your actual URL
       
-      # Database - Add these manually after creating MySQL database
+      # Database - Create a PostgreSQL database manually in Render Dashboard
       - key: DB_CONNECTION
-        value: mysql
+        value: pgsql
       - key: DB_HOST
-        sync: false  # Set from MySQL dashboard
+        sync: false  # Set from PostgreSQL dashboard (internal hostname)
       - key: DB_PORT
-        value: "3306"
+        value: "5432"
       - key: DB_DATABASE
-        sync: false  # Set from MySQL dashboard
+        sync: false  # Set from PostgreSQL dashboard
       - key: DB_USERNAME
-        sync: false  # Set from MySQL dashboard
+        sync: false  # Set from PostgreSQL dashboard
       - key: DB_PASSWORD
-        sync: false  # Set from MySQL dashboard
+        sync: false  # Set from PostgreSQL dashboard
       
       # Cache & Session
       - key: CACHE_STORE
