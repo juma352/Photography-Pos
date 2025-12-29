@@ -31,13 +31,29 @@ git commit -m "Configure Render Docker deployment"
 git push origin main
 ```
 
-### Step 3: Deploy on Render
-1. Go to https://render.com and sign up/login
-2. Click **"New +"** → **"Blueprint"**
-3. Connect your GitHub repository
-4. Render will detect `render.yaml` automatically
-5. Enter your `APP_KEY` when prompted
-6. Click **"Apply"**
+### Step 3: Create MySQL Database on Render
+1. Go to https://render.com Dashboard
+2. Click **"New +"** → **"MySQL"**
+3. Configure:
+   - **Name**: `photography-db`
+   - **Database**: `photography_portfolio`
+   - **Region**: Frankfurt (closest to Germany)
+   - **Plan**: Starter ($7/month)
+4. Click **"Create Database"**
+5. Wait ~2 minutes for database to be ready
+6. Copy the **Internal Database URL** (save this!)
+
+### Step 4: Deploy Web Service via Blueprint
+1. Click **"New +"** → **"Blueprint"**
+2. Connect your GitHub repository (`juma352/Photography-Pos`)
+3. Render will detect `render.yaml` automatically
+4. You'll be prompted to set environment variables:
+   - **APP_KEY**: Paste your key from Step 1
+   - **DB_HOST**: From Internal URL (e.g., `mysql-xxx.frankfurt.render.com`)
+   - **DB_DATABASE**: `photography_portfolio`
+   - **DB_USERNAME**: From Internal URL
+   - **DB_PASSWORD**: From Internal URL
+5. Click **"Apply"**
 
 **That's it!** ✨ Your site will be live in ~10 minutes at `https://photography-portfolio.onrender.com`
 

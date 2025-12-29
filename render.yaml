@@ -10,6 +10,8 @@ services:
     dockerContext: .
     
     # Environment Variables
+    # Note: You'll need to create a MySQL database manually in Render Dashboard
+    # and add the DB_* environment variables after deployment
     envVars:
       - key: APP_NAME
         value: Mawingu Photography
@@ -20,33 +22,23 @@ services:
       - key: APP_TIMEZONE
         value: Europe/Berlin
       - key: APP_KEY
-        generateValue: true  # You'll need to set this manually after deployment
+        sync: false  # You'll set this manually with your generated key
       - key: APP_URL
         value: https://photography-portfolio.onrender.com  # Update with your actual URL
       
-      # Database (will be auto-populated from database service)
+      # Database - Add these manually after creating MySQL database
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
-        fromDatabase:
-          name: photography-db
-          property: host
+        sync: false  # Set from MySQL dashboard
       - key: DB_PORT
-        fromDatabase:
-          name: photography-db
-          property: port
+        value: "3306"
       - key: DB_DATABASE
-        fromDatabase:
-          name: photography-db
-          property: database
+        sync: false  # Set from MySQL dashboard
       - key: DB_USERNAME
-        fromDatabase:
-          name: photography-db
-          property: user
+        sync: false  # Set from MySQL dashboard
       - key: DB_PASSWORD
-        fromDatabase:
-          name: photography-db
-          property: password
+        sync: false  # Set from MySQL dashboard
       
       # Cache & Session
       - key: CACHE_STORE
@@ -54,7 +46,7 @@ services:
       - key: SESSION_DRIVER
         value: database
       - key: SESSION_LIFETIME
-        value: 120
+        value: "120"
       - key: QUEUE_CONNECTION
         value: database
       
@@ -69,11 +61,3 @@ services:
 
     # Auto-deploy on push
     autoDeploy: true
-
-  # MySQL Database
-  - type: database
-    name: photography-db
-    databaseName: photography_portfolio
-    plan: starter  # $7/month - Change to 'free' for PostgreSQL free tier
-    region: frankfurt
-    ipAllowList: []  # Empty means accessible from your web service
